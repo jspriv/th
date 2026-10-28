@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thyroid Food Guide</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f6f8f4;--card:#fff;--tx:#1d2a22;--mut:#5b6b60;--bd:#dfe6dc;--ac:#2f6b4f;
+--g:#e1f3e6;--gt:#1c6b34;--l:#fdf1d6;--lt:#8a5a00;--a:#fbe3e1;--at:#a3281f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121815;--card:#1b241f;--tx:#e8efe9;--mut:#9fb0a4;--bd:#2c3a32;--ac:#6fcf9d;--g:#1d3a28;--gt:#7fe0a0;--l:#3d3216;--lt:#f0c15a;--a:#432122;--at:#ff9b94}}
+:root[data-theme="dark"]{--bg:#121815;--card:#1b241f;--tx:#e8efe9;--mut:#9fb0a4;--bd:#2c3a32;--ac:#6fcf9d;--g:#1d3a28;--gt:#7fe0a0;--l:#3d3216;--lt:#f0c15a;--a:#432122;--at:#ff9b94}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.7rem;margin:.2em 0}
+.sub{color:var(--mut);margin:0 0 16px}
+.note{background:var(--l);color:var(--lt);border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:.93rem}
+.modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+button{font:inherit;cursor:pointer}
+.mode,.tab{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:8px 14px}
+.mode[aria-pressed="true"],.tab[aria-pressed="true"]{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+#q{width:100%;font:inherit;padding:14px 16px;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--tx)}
+#q:focus{outline:none;border-color:var(--ac)}
+#res{margin:14px 0 22px;min-height:20px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.badge{display:inline-block;font-weight:700;font-size:.8rem;border-radius:999px;padding:2px 10px;margin-right:8px}
+.g{background:var(--g);color:var(--gt)}.l{background:var(--l);color:var(--lt)}.a{background:var(--a);color:var(--at)}
+.card b{font-size:1.05rem}.card p{margin:.4em 0 0;color:var(--mut);font-size:.95rem}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.tips{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:6px 16px 10px;margin-top:22px}
+.tips li{margin:.4em 0}
+footer{margin-top:24px;color:var(--mut);font-size:.85rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;border-bottom:1px solid var(--bd);margin-bottom:12px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--tx);border:1px solid var(--bd);background:var(--card);border-radius:999px;padding:6px 12px;font-size:.9rem}
+nav a:hover{border-color:var(--ac)}
+.hero{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px 18px 8px;margin-bottom:16px}
+section{scroll-margin-top:70px}
+h2{scroll-margin-top:70px}
+.top{display:inline-block;margin-top:18px;color:var(--ac)}
+label{font-size:.85rem;color:var(--mut)}
+.bar{height:12px;background:var(--bd);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
+.trow{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0;align-items:flex-end}
+.trow input{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);width:140px}
+.wk{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:6px 0}
+.wk .l{width:62px;color:var(--mut);font-size:.85rem}
+.dy{width:48px;height:48px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-size:.72rem;line-height:1.15}
+.dy[aria-pressed="true"]{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:700}
+h2{font-size:1.15rem;margin:22px 0 4px}
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Sections"><a href="#top">Search</a><a href="#browse">All foods</a><a href="#nepali">Nepali dishes</a><a href="#plan">Diet plan</a><a href="#calcium">Calcium &amp; vit D</a><a href="#meat">Meat</a><a href="#exercise">Exercise</a><a href="#tracker">Tracker</a><a href="#tips">Tips</a></nav>
+<div class="hero" id="top"><h1>🥗 Thyroid Food Guide</h1>
+<p class="sub">Type a food to see whether it’s fine, needs care, or is best avoided.</p>
+<div class="note"><b>Check your type first.</b> A TSH of 6.03 is <i>above</i> the usual range, which points to an <b>underactive</b> thyroid (hypothyroidism). Overactive (hyperthyroidism) usually shows a <i>low</i> TSH. The two need different diets, so this guide covers both. Confirm with your doctor.</div>
+<div class="modes" role="group" aria-label="Thyroid type">
+<button class="mode" id="m-hypo" aria-pressed="true">Underactive (high TSH)</button>
+<button class="mode" id="m-hyper" aria-pressed="false">Overactive (low TSH)</button>
+</div>
+<input id="q" type="search" placeholder="Search a food, e.g. coffee, cabbage, tofu, rice…" autocomplete="off" aria-label="Search food">
+<div id="res" aria-live="polite"></div></div>
+<h2 id="browse">Browse all foods</h2>
+<div class="tabs" role="group" aria-label="Filter">
+<button class="tab" data-f="all" aria-pressed="true">All</button>
+<button class="tab" data-f="g" aria-pressed="false">Safe to eat</button>
+<button class="tab" data-f="l" aria-pressed="false">Limit / time it</button>
+<button class="tab" data-f="a" aria-pressed="false">Avoid</button>
+</div>
+<div class="grid" id="grid"></div>
+<h2 id="nepali">Nepali dishes: what to eat and limit</h2>
+<div class="grid" id="nep"></div>
+<h2 id="plan">Your daily Nepali diet plan</h2>
+<div class="card"><b>7:00–8:00 AM — Breakfast</b><ul style="margin:.4em 0 0"><li>2 boiled eggs</li><li>1–2 rotis or a bowl of oats</li><li>1 glass of milk or a small bowl of plain dahi</li><li>1 seasonal fruit</li></ul><p>If you take levothyroxine, take it with water on an empty stomach and wait 30–60 minutes before eating.</p></div>
+<div class="card"><b>12:00–1:30 PM — Lunch</b><ul style="margin:.4em 0 0"><li>Rice (bhat)</li><li>1 bowl of dal</li><li>1 serving of seasonal tarkari or green saag</li><li>Chicken or lean buff, about a palm-sized portion</li><li>Cucumber or carrot salad</li></ul></div>
+<div class="card"><b>3:30–4:30 PM — Snack</b><ul style="margin:.4em 0 0"><li>Roasted chana or a small handful of nuts</li><li>Guava, apple, orange, or another seasonal fruit</li><li>Water or unsweetened tea</li></ul></div>
+<div class="card"><b>6:30–8:00 PM — Dinner</b><ul style="margin:.4em 0 0"><li>2 rotis or a moderate serving of rice</li><li>Fish, chicken, paneer, or dal</li><li>Cooked vegetables</li><li>Plain dahi if desired</li></ul></div>
+<div class="card"><b>9:00 PM — Optional</b><ul style="margin:.4em 0 0"><li>A glass of milk if you are hungry.</li><li>If you take thyroid medicine, keep milk and calcium supplements away from your medication according to your clinician’s instructions.</li></ul></div>
+
+<h2 id="calcium">Vitamin D &amp; calcium-rich foods</h2>
+<p class="sub">Thyroid problems can weaken bones over time, so both nutrients matter for either type.</p>
+<div class="card"><span class="badge g">Vitamin D</span><b>Oily fish, egg yolks, UV-grown mushrooms, fortified milk</b><p>Salmon, mackerel, sardines and whole eggs are the best food sources. Fish has iodine, so keep it moderate with an overactive thyroid. Morning sunlight for 10–15 minutes also helps; ask your doctor about a supplement if you are low.</p></div>
+<div class="card"><span class="badge g">Calcium</span><b>Milk, curd, paneer, chhurpi</b><p>The easiest sources. With an underactive thyroid, keep dairy at least 4 hours from levothyroxine. With an overactive thyroid, dairy has some iodine, so moderate portions are best.</p></div>
+<div class="card"><span class="badge g">Calcium</span><b>Sesame (til), almonds, chickpeas, beans, dal</b><p>Dairy-free options that also bring zinc and fibre. Eat them away from your pill if you take one.</p></div>
+<div class="card"><span class="badge g">Calcium</span><b>Leafy greens: mustard greens (rayo saag), methi, kale</b><p>Good calcium. Cook cruciferous greens like kale and mustard; spinach has calcium that is poorly absorbed.</p></div>
+<div class="card"><span class="badge g">Calcium</span><b>Small fish eaten with bones (sardines)</b><p>Calcium and vitamin D together. Moderate portions because of iodine.</p></div>
+<div class="card"><span class="badge l">Careful</span><b>Ragi / millet, calcium-set tofu</b><p>Ragi is high in calcium but millet can act as a goitrogen in large amounts; tofu may reduce pill absorption. Occasional servings are fine, away from your pill.</p></div>
+<div class="card"><span class="badge l">Careful</span><b>Calcium &amp; iron supplements</b><p>Take 4 hours apart from levothyroxine. Ask your doctor or pharmacist before starting any supplement.</p></div>
+
+<h2 id="meat">Which meat is better?</h2>
+<div class="card"><span class="badge g">Best</span><b>Skinless chicken &amp; eggs</b><p>Lean, with zinc and selenium. Easy to cook with little oil (boiled, grilled, light curry).</p></div>
+<div class="card"><span class="badge g">Best</span><b>Lean goat (khasi) &amp; buff</b><p>Good zinc, iron and B12. Trim the fat and keep portions palm-sized, 2–3 times a week. Fatty cuts add to weight gain.</p></div>
+<div class="card"><span class="badge l">Moderate</span><b>Fish</b><p>Great for selenium and vitamin D. Fine 2–3 times a week with an underactive thyroid, but limit with an overactive one because of iodine.</p></div>
+<div class="card"><span class="badge l">Moderate</span><b>Pork &amp; beef</b><p>Fine if lean; fatty cuts and bacon are not helpful.</p></div>
+<div class="card"><span class="badge a">Avoid</span><b>Processed meat</b><p>Sausage, salami, bacon, packaged nuggets: high in salt and fat, and Healthline advises avoiding highly processed foods. Deep-fried meat is also best occasional.</p></div>
+<h2 id="exercise">1-month exercise routine</h2>
+<p class="sub">Gentle and progressive, written for an underactive thyroid. Aim for “moderate”: you can still talk while moving. Get your doctor’s okay before you start.</p>
+<div class="card"><span class="badge g">Week 1</span><b>Start easy</b><ul style="margin:.4em 0 0"><li>Walk 20 minutes, 5 days</li><li>5 minutes of gentle stretching daily</li><li>2 rest days</li></ul></div>
+<div class="card"><span class="badge g">Week 2</span><b>Add light strength</b><ul style="margin:.4em 0 0"><li>Walk 30 minutes, 5 days</li><li>2 days of bodyweight strength, 15 minutes: wall push-ups, chair squats, glute bridges (2 sets of 8–10)</li><li>10 minutes of gentle yoga on one day</li></ul></div>
+<div class="card"><span class="badge g">Week 3</span><b>Build a little</b><ul style="margin:.4em 0 0"><li>Walk 30–35 minutes, 5 days, with 2–3 brisk minutes mixed in</li><li>2–3 days of strength, 20 minutes: add lunges and leg raises (2–3 sets of 10)</li><li>15 minutes of yoga or pilates: cat-cow, child’s pose, bridge</li></ul></div>
+<div class="card"><span class="badge g">Week 4</span><b>Settle into a routine</b><ul style="margin:.4em 0 0"><li>Walk or cycle 35–40 minutes, 5 days, with a few brisk stretches</li><li>3 days of strength, 25 minutes</li><li>1 yoga or stretching day and 1 full rest day</li></ul></div>
+<div class="card"><span class="badge l">Good habits</span><b>For every week</b><ul style="margin:.4em 0 0"><li>Take levothyroxine on an empty stomach and exercise after your breakfast gap</li><li>Drink water and eat a small snack before longer sessions</li><li>Skip pre-workout supplements and energy drinks (caffeine)</li><li>On low-energy days, do half the plan instead of skipping everything</li><li>Sleep 7–8 hours; recovery matters</li></ul></div>
+<div class="card"><span class="badge l">If overactive</span><b>Keep it lower intensity</b><p>Stick to walking, gentle yoga, swimming and light weights. Avoid HIIT, sprinting and heavy lifting until your doctor says your thyroid is controlled. Use the Week 1–2 pace for the whole month.</p></div>
+<div class="card"><span class="badge a">Stop</span><b>Warning signs</b><p>Chest pain, an irregular or very fast heartbeat, fainting, or breathlessness at rest: stop and seek medical care. Don’t change your medicine on your own, and ask your doctor when to repeat your TSH test.</p></div>
+
+<h2 id="tracker">Exercise tracker</h2>
+<p class="sub">Tick each day you exercise. The goal starts at 30 days, and you can raise it any time.</p>
+<div class="card">
+<div class="trow"><label>Start date<br><input type="date" id="tstart"></label><label>Goal (days)<br><input type="number" id="tgoal" min="7" max="365"></label><label>Tracker code<br><input type="text" id="tcode" maxlength="40"></label></div>
+<div class="bar" aria-hidden="true"><i id="tbar"></i></div>
+<p id="tsum" style="margin:.2em 0 8px"></p>
+<div id="tgrid"></div>
+<div class="trow"><button class="tab" id="text">+ 30 more days</button><button class="tab" id="treset">Reset</button></div>
+<p id="tstat" class="sub" style="margin:6px 0 0;font-size:.85rem"></p>
+</div>
+
+<div class="tips" id="tips"></div>
+<a class="top" href="#top">↑ Back to top</a>
+<footer>Compiled from Healthline, Medical News Today, British Thyroid Foundation and NHS-based guidance. Educational only, not medical advice. Diet rarely replaces treatment; ask your doctor or dietitian before changing medicines or supplements.</footer>
+</main>
+<script>
+var LBL={g:"Safe",l:"Limit / time it",a:"Avoid"};
+// name | aliases | hypoStatus | hypoNote | hyperStatus | hyperNote
+var F=[
+["Seaweed / kelp / nori","seaweed kelp nori sushi wakame","a","Very high iodine; too much can worsen thyroid function. Skip kelp supplements.","a","Very high iodine can worsen Graves’ disease."],
+["Iodized salt","salt iodised table salt","l","You need some iodine, but don’t overdo it. Moderate amounts are fine.","l","Reduce if your doctor advises a lower-iodine diet."],
+["Fish (white / oily)","fish salmon tuna mackerel sardine cod vitamin d calcium","g","Good source of selenium, vitamin D and omega-3. Keep portions moderate.","l","Iodine-rich; limit if advised. Oily fish helps vitamin D."],
+["Shrimp / seafood","shrimp prawn crab lobster seafood","l","Rich in iodine; moderate portions.","l","High in iodine; limit if advised."],
+["Eggs","egg eggs omelette boiled vitamin d yolk","g","Provide selenium, iodine and B12.","g","Fine in normal amounts."],
+["Brazil nuts","brazil nut selenium","g","Great selenium source. 1–2 a day is enough; more can be toxic.","g","Selenium supports thyroid health. Keep to 1–2 a day."],
+["Milk","milk dairy calcium vitamin d","l","Can reduce levothyroxine absorption. Keep 4 hours from the pill.","l","Calcium is good for bones but dairy has iodine. Ask a dietitian."],
+["Curd / yogurt","curd yogurt yoghurt dahi lassi calcium","g","Fine. Just not at the same time as your medicine.","g","Fine in moderation."],
+["Cheese / paneer","cheese paneer cottage ice cream calcium","g","Fine in moderation; time away from medicine.","l","Dairy can carry iodine; moderate."],
+["Soy / tofu / soy milk","soy soya tofu tempeh edamame soy sauce","l","May reduce pill absorption. Keep 4 hours apart; not forbidden.","a","Avoid before radioactive iodine treatment, per BTF."],
+["Broccoli","broccoli","l","Goitrogen. Cooked and moderate is fine; no need to cut out.","g","Cruciferous veg may mildly help; eat raw in moderation."],
+["Cabbage","cabbage bok choy radish turnip","l","Goitrogen. Cooking reduces it; moderate portions are fine.","g","Fine, even helpful in moderation."],
+["Cauliflower","cauliflower brussels sprouts","l","Goitrogen. Cook it and keep portions moderate.","g","Fine in moderation."],
+["Kale / collards","kale collard greens calcium","l","Goitrogen. Cooked, occasional servings are fine.","g","Fine in moderation."],
+["Spinach / leafy greens","spinach lettuce methi fenugreek saag","g","Nutritious; fine.","g","Fine."],
+["Coffee","coffee espresso latte cappuccino","l","Blocks levothyroxine absorption. Wait 30–60 minutes after the pill.","a","Can worsen anxiety, fast heartbeat and poor sleep."],
+["Tea (black / milk tea)","tea chai black tea","l","Wait 30–60 minutes after your pill.","a","Caffeine can worsen symptoms."],
+["Green tea","green tea matcha","l","Caffeine; keep it away from your pill.","a","Caffeine can worsen symptoms."],
+["Energy drinks / cola","energy drink red bull cola soda pepsi coke","a","High sugar and caffeine; no benefit.","a","Caffeine can worsen palpitations and anxiety."],
+["Chocolate","chocolate cocoa dark chocolate","g","Small amounts are fine.","l","Contains caffeine; limit."],
+["Alcohol","alcohol beer wine whisky rum vodka","l","Can affect thyroid function; keep minimal.","a","Can worsen symptoms and bone loss."],
+["Rice","rice white rice brown rice","g","Fine. Brown rice adds selenium.","g","Fine."],
+["Roti / bread / pasta (wheat)","roti chapati bread pasta wheat gluten noodles","g","Fine unless you have celiac disease or your doctor advises otherwise.","g","Gluten link in Graves’ is speculative; optional trial only."],
+["Oats","oats oatmeal porridge","g","Fine. High fibre, so keep it away from the pill.","g","Good selenium source."],
+["Millet","millet ragi bajra jowar","l","Goitrogenic in large amounts; moderate.","g","Fine."],
+["Quinoa","quinoa","g","Fine.","g","Fine."],
+["Dal / lentils / beans","dal lentil beans rajma chickpea chana legume dal bhat calcium","g","Zinc and fibre. Eat away from your pill.","g","Good zinc source."],
+["Mushrooms","mushroom mushrooms vitamin d","g","Selenium, zinc, and vitamin D if UV grown.","g","Selenium, zinc, vitamin D."],
+["Pumpkin seeds","pumpkin seed seeds sunflower","g","Zinc-rich.","g","Zinc-rich."],
+["Almonds / peanuts","almond almonds peanut peanuts nuts cashew calcium","g","Fine in normal amounts.","g","Fine."],
+["Walnuts","walnut walnuts","l","May affect pill absorption; keep 4 hours apart.","g","Fine."],
+["Chicken","chicken poultry","g","Zinc and protein.","g","Zinc and protein."],
+["Beef / mutton / buff","beef mutton buff buffalo goat lamb pork meat","g","Zinc and selenium; lean cuts best.","g","Good zinc source."],
+["Olive oil / avocado","olive oil avocado","g","Healthy unsaturated fats.","g","Healthy fats."],
+["Potato / sweet potato","potato potatoes sweet potato aloo","g","Fine.","g","Fine."],
+["Tomato, carrot, cucumber, onion, garlic","tomato carrot cucumber onion garlic vegetables veggies","g","Fine; eat freely.","g","Fine; eat freely."],
+["Fruits (berries, banana, apple, orange)","fruit fruits berries banana apple orange mango papaya grapes","g","Fine; antioxidant-rich.","g","Fine."],
+["Strawberry / peach / pear","strawberry peach pear","g","Listed as mild goitrogens by some sites, but evidence is weak.","g","Fine."],
+["Fast food / chips / instant noodles","fast food chips instant noodles burger pizza fries momo packaged processed","a","Processed, high in salt and fat; promotes weight gain.","a","Healthline advises avoiding highly processed food."],
+["Sweets / cake / biscuits","sweets cake biscuit cookie candy sugar mithai dessert","l","Added sugar adds to weight gain; keep occasional.","l","Healthline advises limiting added sugars."],
+["Fried food","fried samosa pakora deep fried","l","Occasional only.","l","Occasional only."],
+["Calcium / iron supplements","calcium iron supplement tablet antacid multivitamin","l","Take 4 hours apart from levothyroxine.","g","Calcium and vitamin D protect bones; ask your doctor about iodine content."],
+["Biotin / hair-skin supplements","biotin hair skin nails supplement","l","Can distort thyroid blood tests. Pause before testing, if your doctor agrees.","l","Same: can distort thyroid blood tests."],
+["Dal bhat tarkari","dal bhat tarkari nepali thali khana set","g","Great everyday meal. Go easy on oil and add plenty of vegetables.","g","Good balanced meal."],
+["Momo (steamed chicken / buff)","momo dumpling steam momos nepali","g","Steamed is fine. Cabbage filling is minor; the wrapper is refined flour so keep portions moderate.","l","Fine, but watch salt and iodine in the sauce; keep portions moderate."],
+["Momo (fried / kothey / jhol)","fried momo kothey kothe jhol momo chilli momo","l","Extra oil and salt promote weight gain; occasional.","l","Occasional only."],
+["Veg momo (cabbage / soy filling)","veg momo vegetable momo soya momo paneer momo","l","Soy chunks and cabbage are mild goitrogens; fine in moderation, away from your pill.","l","Soy filling: avoid before radioactive iodine treatment."],
+["Thukpa","thukpa soup noodle soup","g","Good with vegetables and lean meat; watch salt.","g","Fine; skip if it has seaweed or heavy instant seasoning."],
+["Chowmein / chowmein noodles","chowmein chow mein noodles fried noodles","l","Refined and oily; occasional.","l","Occasional; watch soy sauce."],
+["Wai Wai / instant noodles","wai wai waiwai rara instant noodle yumyum","a","Processed, very high in salt and fat.","a","Highly processed; avoid regularly."],
+["Dhido","dhido dhindo millet flour buckwheat ato","g","Good fibre. Millet dhido in large amounts can act as a goitrogen; buckwheat or maize is a safer choice.","g","Fine."],
+["Gundruk","gundruk sinki fermented greens","g","Fermented leafy greens; fine and good for gut health.","g","Fine."],
+["Aloo tama (bamboo shoot)","aloo tama bamboo shoot tama","l","Bamboo shoots are goitrogenic; boiling or cooking well and small portions are OK.","g","Fine in moderation."],
+["Kwati (mixed sprouted beans)","kwati gunya sprouted beans bean soup","g","Rich in protein, zinc, fibre. Eat away from your pill.","g","Good zinc and protein."],
+["Sel roti","sel roti selroti","l","Deep fried and sugary; occasional festival treat.","l","Occasional treat."],
+["Chatamari","chatamari newari pizza","g","Rice-based; fine with egg or lean meat topping.","g","Fine."],
+["Choila / sekuwa (grilled meat)","choila sekuwa grilled meat barbecue bbq buff choyla","g","Lean grilled meat is fine. Go easy on oil and salt, and avoid charred parts.","g","Fine; lean cuts."],
+["Sukuti (dried meat)","sukuti dried meat jerky","l","Very salty and often fried in oil; small portions.","l","Salty; small portions."],
+["Masu curry (chicken / mutton / buff)","masu curry meat curry chicken curry mutton curry khasi ko masu","g","Fine; use less oil and trim visible fat.","g","Fine."],
+["Chiura (beaten rice)","chiura chiwda beaten rice poha","g","Light, fine; high fibre when with beans.","g","Fine."],
+["Samosa / pakora / chatpate","samosa pakoda pakora chatpate bhuja fry snack","l","Fried; occasional.","l","Fried; occasional."],
+["Pani puri / panipuri","pani puri panipuri golgappa puchka","l","Refined and salty; occasional.","l","Occasional."],
+["Yomari / lakhamari / mithai","yomari lakhamari jalebi gulab jamun laddu barfi","l","Sugary; occasional treat.","l","Occasional treat."],
+["Juju dhau (king curd)","juju dhau king curd bhaktapur curd dhau","g","Fine. Keep 4 hours from your pill if you take dairy at that time.","g","Fine in moderation."],
+["Khichdi","khichdi khichuri rice dal porridge","g","Easy, nutritious.","g","Good."],
+["Chhurpi / local cheese","churpi chhurpi yak cheese calcium","g","Protein-rich; fine in moderation.","l","Dairy iodine; moderate."],
+["Local alcohol (raksi / tongba / chyang)","raksi aila tongba chyang jaad local alcohol","l","Keep minimal; may affect thyroid and medicine.","a","Can worsen symptoms and bone loss."],
+["Sesame seeds (til)","sesame til tahini calcium","g","Excellent non-dairy calcium; sprinkle on food. Eat away from your pill.","g","Good calcium and zinc for bone health."],
+["Mustard greens (rayo saag)","mustard greens rayo saag calcium","l","Calcium-rich but mildly goitrogenic; cook it and keep portions moderate.","g","Good calcium source in moderation."],
+["Sardines / small fish with bones","sardine sardines small fish sidra machha calcium vitamin d","g","Calcium and vitamin D together; moderate portions because of iodine.","l","Calcium and vitamin D, but iodine-rich; limit."],
+["Ragi (finger millet)","ragi finger millet kodo calcium","l","High in calcium but a goitrogen in large amounts; occasional servings.","g","Good calcium source."],
+["Fortified milk / cereal","fortified milk cereal fortified foods vitamin d calcium","l","Useful for vitamin D and calcium, but keep 4 hours from your pill.","g","Useful for vitamin D and calcium."],
+["Vitamin D supplement / sunlight","vitamin d supplement sunlight sun d3 cholecalciferol","g","Helpful if your level is low; confirm the dose with your doctor. Morning sun for 10–15 minutes also helps.","g","Protects bones; confirm dose with your doctor."],
+["Water","water","g","Take your pill with plain water only.","g","Stay hydrated."]
+];
+var mode="hypo",filter="all";
+var TIPS={hypo:["Take levothyroxine (if prescribed) on an empty stomach with water, 30–60 minutes before food or coffee.","Keep calcium, iron, soy, walnuts and high-fibre meals about 4 hours from the pill.","Cruciferous vegetables and soy don’t need to be cut out; cooking and moderation are enough.","Aim for selenium, zinc, iodine (not excess) and vitamin D from regular foods.","Vegetarians: ask about B12 levels."],
+hyper:["Diet usually can’t control hyperthyroidism alone; follow your treatment plan.","If you have Graves’ disease, limit seaweed, iodized salt and iodine-rich seafood.","Limit caffeine (coffee, tea, energy drinks, chocolate).","Get enough calcium and vitamin D to protect your bones.","Selenium and zinc from foods like Brazil nuts, meat and pumpkin seeds may help."]};
+function esc(s){return s.replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+function card(f){var i=mode==="hypo"?2:4;return '<div class="card"><span class="badge '+f[i]+'">'+LBL[f[i]]+'</span><b>'+esc(f[0])+'</b><p>'+esc(f[i+1])+'</p></div>'}
+function render(){
+ var i=mode==="hypo"?2:4,h="";
+ F.filter(function(f){return filter==="all"||f[i]===filter}).forEach(function(f){h+=card(f)});
+ document.getElementById("grid").innerHTML=h||"<p>No foods here.</p>";
+ var a=F.findIndex(function(f){return f[0]==="Dal bhat tarkari"}),b=F.findIndex(function(f){return f[0].indexOf("Local alcohol")===0});
+ document.getElementById("nep").innerHTML=F.slice(a,b+1).map(card).join("");
+ document.getElementById("tips").innerHTML="<h2>Key tips for "+(mode==="hypo"?"an underactive":"an overactive")+" thyroid</h2><ul>"+TIPS[mode].map(function(t){return"<li>"+t+"</li>"}).join("")+"</ul>";
+ search();
+}
+function search(){
+ var q=document.getElementById("q").value.trim().toLowerCase(),r=document.getElementById("res");
+ if(!q){r.innerHTML="";return}
+ var m=F.filter(function(f){return (f[0]+" "+f[1]).toLowerCase().indexOf(q)>-1});
+ r.innerHTML=m.length?m.map(card).join(""):'<div class="card"><b>Not in my list</b><p>I don’t have “'+esc(q)+'” yet. Ask your doctor or dietitian, and check whether it is high in iodine, soy or caffeine, or is a supplement.</p></div>';
+}
+document.getElementById("q").addEventListener("input",search);
+["hypo","hyper"].forEach(function(k){document.getElementById("m-"+k).addEventListener("click",function(){mode=k;document.getElementById("m-hypo").setAttribute("aria-pressed",k==="hypo");document.getElementById("m-hyper").setAttribute("aria-pressed",k==="hyper");render()})});
+document.querySelectorAll(".tab").forEach(function(b){b.addEventListener("click",function(){filter=b.dataset.f;document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-pressed",x===b)});render()})});
+var T={id:"me",start:"",goal:30,done:[]},rst=false;
+function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function saveLocal(){try{localStorage.setItem("thy_tracker",JSON.stringify(T))}catch(e){}}
+function api(m,b){return fetch("/api/progress?id="+encodeURIComponent(T.id),{method:m,headers:{"Content-Type":"application/json"},body:b?JSON.stringify(b):undefined}).then(function(r){if(!r.ok||(r.headers.get("content-type")||"").indexOf("json")<0)throw 0;return r.json()})}
+function stat(ok){document.getElementById("tstat").textContent=ok?"Synced to your Netlify database.":"Saved on this device only (no database connected)."}
+function save(){saveLocal();api("PUT",{start:T.start,goal:T.goal,done:T.done}).then(function(){stat(true)},function(){stat(false)})}
+function pull(){api("GET").then(function(d){if(d&&d.start){T.start=d.start;T.goal=d.goal||30;T.done=d.done||[];saveLocal();fillT();drawT();stat(true)}else{save()}},function(){stat(false)})}
+function fillT(){document.getElementById("tstart").value=T.start;document.getElementById("tgoal").value=T.goal;document.getElementById("tcode").value=T.id}
+function drawT(){
+ var g=T.goal,sd=new Date(T.start+"T00:00:00"),h="",n=T.done.length;
+ for(var w=0;w*7<g;w++){var c=0,e=Math.min(g,w*7+7),b="";
+  for(var i=w*7;i<e;i++){var d=new Date(sd.getTime());d.setDate(sd.getDate()+i);var on=T.done.indexOf(i)>-1;if(on)c++;
+   b+='<button class="dy" data-i="'+i+'" aria-pressed="'+on+'" title="Day '+(i+1)+'">'+d.toLocaleDateString(undefined,{weekday:"short"})+'<br>'+d.getDate()+'</button>'}
+  h+='<div class="wk"><span class="l">Week '+(w+1)+'</span>'+b+'<span class="l">'+c+'/'+(e-w*7)+'</span></div>'}
+ document.getElementById("tgrid").innerHTML=h;
+ var ti=Math.round((new Date(ymd(new Date())+"T00:00:00")-sd)/864e5),k=T.done.indexOf(ti)>-1?ti:ti-1,s=0;
+ while(k>=0&&T.done.indexOf(k)>-1){s++;k--}
+ document.getElementById("tbar").style.width=Math.min(100,Math.round(n/g*100))+"%";
+ document.getElementById("tsum").textContent=n+" of "+g+" days done ("+Math.min(100,Math.round(n/g*100))+"%). Current streak: "+s+" day"+(s===1?"":"s")+(n>=g?" \ud83c\udf89 Goal reached! Extend it to keep going.":"");
+}
+document.getElementById("tgrid").addEventListener("click",function(ev){var b=ev.target.closest(".dy");if(!b)return;var i=+b.dataset.i,p=T.done.indexOf(i);if(p>-1)T.done.splice(p,1);else T.done.push(i);save();drawT()});
+document.getElementById("tstart").addEventListener("change",function(){if(this.value){T.start=this.value;save();drawT()}});
+document.getElementById("tgoal").addEventListener("change",function(){T.goal=Math.max(7,Math.min(365,parseInt(this.value,10)||30));fillT();save();drawT()});
+document.getElementById("tcode").addEventListener("change",function(){T.id=(this.value||"me").replace(/[^a-zA-Z0-9_-]/g,"").slice(0,40)||"me";fillT();saveLocal();pull()});
+document.getElementById("text").addEventListener("click",function(){T.goal=Math.min(365,T.goal+30);fillT();save();drawT()});
+document.getElementById("treset").addEventListener("click",function(){var b=this;if(!rst){rst=true;b.textContent="Click again to confirm";setTimeout(function(){rst=false;b.textContent="Reset"},3000);return}rst=false;b.textContent="Reset";T.done=[];save();drawT()});
+(function(){try{var s=JSON.parse(localStorage.getItem("thy_tracker")||"null");if(s)T=Object.assign(T,s)}catch(e){}if(!T.start)T.start=ymd(new Date());fillT();drawT();pull()})();
+render();
+</script>
+</body>
+</html>
